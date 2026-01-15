@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Magic of Ananya</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- 1. GLOBAL RESET & VARS --- */
+        :root {
+            --gryffindor-red: #740001;
+            --wizard-gold: #d4af37;
+            --parchment-bg: #f5f5dc;
+            --dark-bg: #0b0c10;
+        }
+
+        * {
+            box-sizing: border-box; /* Crucial for responsive padding */
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cormorant Garamond', serif;
+            background-color: var(--dark-bg);
+            color: #1a1a1a;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* Animated Starry Background */
+        .stars {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #000 url('https://www.transparenttextures.com/patterns/stardust.png');
+            z-index: -1;
+            animation: twinkle 200s linear infinite;
+        }
+
+        @keyframes twinkle {
+            from {background-position: 0 0;}
+            to {background-position: -10000px 5000px;}
+        }
+
+        /* --- 2. THE ENTRANCE (Landing Screen) --- */
+        #landing-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000;
+            padding: 20px;
+            text-align: center;
+            transition: opacity 1.5s ease-out;
+        }
+
+        .lumos-btn {
+            background: transparent;
+            border: 2px solid var(--wizard-gold);
+            color: var(--wizard-gold);
+            padding: 15px 30px;
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 1.2rem; /* Responsive Font */
+            cursor: pointer;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px var(--wizard-gold);
+            transition: all 0.3s ease;
+            max-width: 100%;
+        }
+
+        .lumos-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* --- 3. MAIN CONTAINER --- */
+        #main-content {
+            opacity: 0;
+            transition: opacity 2s ease-in;
+            display: none;
+            min-height: 100vh;
+            padding: 40px 15px; /* Smaller padding on mobile */
+            justify-content: center;
+            align-items: flex-start; /* Align top for long content */
+        }
+
+        .parchment {
+            background-color: var(--parchment-bg);
+            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+            width: 100%;
+            max-width: 700px;
+            padding: 40px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8), inset 0 0 60px rgba(139, 69, 19, 0.2);
+            border-radius: 5px;
+            position: relative;
+            text-align: center;
+            border: 6px double #4a3b2a;
+        }
+
+        /* --- 4. TYPOGRAPHY --- */
+        h1.headline {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 2.5rem;
+            color: var(--gryffindor-red);
+            margin: 0 0 10px 0;
+            line-height: 1.1;
+        }
+
+        .sub-headline {
+            font-family: 'Pinyon Script', cursive;
+            font-size: 1.8rem;
+            color: #4a4a4a;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        /* --- 5. DAILY PROPHET FRAME --- */
+        .prophet-frame {
+            border: 3px solid #111;
+            padding: 10px;
+            margin: 0 auto 30px auto;
+            width: 90%; /* Wider on mobile */
+            background: #e3dccb;
+            transform: rotate(-1deg);
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+        }
+
+        .moving-photo {
+            width: 100%;
+            height: 250px; /* Default height */
+            overflow: hidden;
+            border: 1px solid #000;
+            position: relative;
+            filter: sepia(80%) grayscale(20%) contrast(1.2);
+        }
+
+        .moving-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: magicZoom 12s infinite alternate ease-in-out;
+        }
+
+        @keyframes magicZoom {
+            0% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.1) translate(-2%, 2%); }
+            100% { transform: scale(1.05) translate(2%, -2%); }
+        }
+
+        .caption {
+            font-family: 'Cinzel Decorative', cursive;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-top: 10px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #000;
+            display: inline-block;
+            max-width: 100%;
+        }
+
+        .news-text {
+            text-align: justify;
+            padding: 10px 5px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        /* --- 6. TIMER --- */
+        .timer-container {
+            margin-top: 20px;
+            border-top: 1px solid #b89c6d;
+            border-bottom: 1px solid #b89c6d;
+            padding: 20px 0;
+        }
+
+        .timer-grid {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+            flex-wrap: wrap; /* Allows wrapping on tiny screens */
+        }
+
+        .time-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 60px;
+        }
+
+        .time-val {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 2rem;
+            color: var(--gryffindor-red);
+            line-height: 1;
+        }
+
+        .time-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        /* --- 7. BIRTHDAY REVEAL --- */
+        .hidden { display: none !important; }
+
+        #birthday-message h1 {
+            font-size: 2.5rem;
+            color: var(--gryffindor-red);
+            margin-bottom: 10px;
+        }
+        
+        #birthday-message p {
+            font-size: 1.2rem;
+        }
+
+        /* --- MEDIA QUERIES (RESPONSIVENESS) --- */
+        
+        /* Tablets and Large Phones */
+        @media (max-width: 768px) {
+            .parchment {
+                padding: 30px 20px;
+                border-width: 4px;
+            }
+            h1.headline { font-size: 2rem; }
+            .sub-headline { font-size: 1.5rem; }
+            .moving-photo { height: 300px; }
+        }
+
+        /* Small Mobile Devices */
+        @media (max-width: 480px) {
+            .lumos-btn {
+                font-size: 1rem;
+                padding: 12px 20px;
+                width: 100%;
+            }
+            
+            #main-content { padding: 20px 10px; }
+            
+            .prophet-frame { width: 100%; margin: 0 0 20px 0; }
+            
+            h1.headline { font-size: 1.8rem; }
+            
+            .timer-grid { gap: 10px; }
+            .time-val { font-size: 1.5rem; }
+            .time-unit { min-width: 50px; }
+            
+            #birthday-message h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stars"></div>
+
+    <audio id="bg-music" loop>
+        <source src="/assets/harry_potter_theme.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div id="landing-screen">
+        <button class="lumos-btn" onclick="revealMagic()">
+            I Solemnly Swear That I Am Up To No Good
+        </button>
+        <p style="color: #aaa; margin-top: 20px; font-style: italic; font-size: 0.9rem;">
+            (Tap to Reveal Magic & Music)
+        </p>
+    </div>
+
+    <div id="main-content">
+        <div class="parchment">
+            
+            <h1 class="headline">Hogwarts Express</h1>
+            <p class="sub-headline">Special Delivery for Ananya</p>
+
+            <div class="prophet-frame">
+                <div style="border-bottom: 2px solid #000; margin-bottom: 5px; font-weight: bold; font-size: 0.8rem; letter-spacing: 1px;">
+                    THE DAILY PROPHET
+                </div>
+                
+                <div class="moving-photo">
+                    <img src="/assets/anan.jpeg" alt="Birthday Witch">
+                </div>
+
+                <div class="caption">The Chosen One Turns 21</div>
+                
+                <p class="news-text">
+                    <strong>MINISTRY ALERT:</strong>⚡Magical levels are spiking dangerously high as Ananya approaches her 21st year! 
+                    Experts predict charms, celebrations, and an excessive amount of cake. 
+                    Wizards and Muggles are advised to prepare for the festivities.⚡
+                </p>
+            </div>
+
+            <div id="countdown-wrapper" class="timer-container">
+                <p style="font-style: italic; margin: 0 0 10px 0; color: #666;">Time until the prophecy is fulfilled:</p>
+                <div class="timer-grid">
+                    <div class="time-unit">
+                        <span class="time-val" id="days">00</span>
+                        <span class="time-label">Days</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-val" id="hours">00</span>
+                        <span class="time-label">Hrs</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-val" id="minutes">00</span>
+                        <span class="time-label">Mins</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-val" id="seconds">00</span>
+                        <span class="time-label">Secs</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="birthday-message" class="hidden">
+                <h1>Happy 21st Birthday!</h1>
+                <p style="font-size: 1.5rem;">🪄 You're a wizard, Ananya..! 🪄</p>
+                <p>"It matters not what someone is born, but what they grow to be."</p>
+                <div style="margin-top: 20px; font-size: 2rem;">⚡ 🎂 ⚡</div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // --- 1. ENTRANCE LOGIC ---
+        function revealMagic() {
+            const landing = document.getElementById('landing-screen');
+            const main = document.getElementById('main-content');
+            const music = document.getElementById('bg-music');
+
+            // Fade out landing
+            landing.style.opacity = '0';
+            
+            // Play Audio
+            music.volume = 0.5;
+            music.play().catch(e => console.log("Audio issue:", e));
+
+            // Switch view
+            setTimeout(() => {
+                landing.style.display = 'none';
+                main.style.display = 'flex';
+                // Trigger reflow
+                void main.offsetWidth; 
+                main.style.opacity = '1';
+            }, 1500);
+        }
+
+        // --- 2. COUNTDOWN LOGIC ---
+        const countdown = () => {
+            // Target: Jan 15, 2026, 00:00:00
+            const countDate = new Date("January 15, 2026 00:00:00").getTime();
+            const now = new Date().getTime();
+            const gap = countDate - now;
+
+            if (gap <= 0) {
+                document.getElementById("countdown-wrapper").classList.add("hidden");
+                document.getElementById("birthday-message").classList.remove("hidden");
+                return;
+            }
+
+            const second = 1000;
+            const minute = second * 60;
+            const hour = minute * 60;
+            const day = hour * 24;
+
+            const textDay = Math.floor(gap / day);
+            const textHour = Math.floor((gap % day) / hour);
+            const textMinute = Math.floor((gap % hour) / minute);
+            const textSecond = Math.floor((gap % minute) / second);
+
+            document.getElementById("days").innerText = textDay;
+            document.getElementById("hours").innerText = textHour;
+            document.getElementById("minutes").innerText = textMinute;
+            document.getElementById("seconds").innerText = textSecond;
+        };
+
+        setInterval(countdown, 1000);
+        countdown();
+    </script>
+</body>
+</html>
